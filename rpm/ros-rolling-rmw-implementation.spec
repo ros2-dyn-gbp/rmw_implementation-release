@@ -24,6 +24,10 @@ Release:        %{release}%{?release_suffix}
 Summary:        %{summary}
 Provides:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       %{name}-runtime%{?_isa} = %{version}-%{release}
+Requires:       ros-%{ros_distro}(rmw_implementation_packages)(devel)(member)
+%if 0%{?with_weak_deps}
+Recommends:     ros-%{ros_distro}(rmw_fastrtps_cpp)(devel)
+%endif
 
 %description devel
 Proxy implementation of the ROS 2 Middleware Interface.
@@ -32,6 +36,10 @@ Proxy implementation of the ROS 2 Middleware Interface.
 %package runtime
 Release:        %{release}
 Summary:        %{summary}
+Requires:       ros-%{ros_distro}(rmw_implementation_packages)(member)
+%if 0%{?with_weak_deps}
+Recommends:     ros-%{ros_distro}(rmw_fastrtps_cpp)
+%endif
 
 %description runtime
 Proxy implementation of the ROS 2 Middleware Interface.
