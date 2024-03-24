@@ -1,0 +1,27 @@
+From 26c9faac49d9800d2bb6cce472b229c90d9b30f3 Mon Sep 17 00:00:00 2001
+From: Scott K Logan <logans@cottsay.net>
+Date: Tue, 9 Mar 2021 16:07:42 -0800
+Subject: [PATCH 1/2] Drop Connext dependencies
+
+This RMW isn't distributed as an RPM.
+
+Signed-off-by: Scott K Logan <logans@cottsay.net>
+---
+ package.xml | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/package.xml b/package.xml
+index db29b4572736..efb4ff77fdeb 100644
+--- a/package.xml
++++ b/package.xml
+@@ -25,7 +25,6 @@
+   Bloom does not support group_depend so entries below duplicate the group rmw_implementation_packages.
+   This ensures that binary packages have support for all of these rmw impl. enabled.
+   -->
+-  <build_depend>rmw_connextdds</build_depend>
+   <build_depend>rmw_cyclonedds_cpp</build_depend>
+   <build_depend>rmw_fastrtps_cpp</build_depend>
+   <build_depend>rmw_fastrtps_dynamic_cpp</build_depend>
+-- 
+2.44.0
+
