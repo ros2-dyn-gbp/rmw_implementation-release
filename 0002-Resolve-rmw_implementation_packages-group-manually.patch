@@ -1,0 +1,48 @@
+From 0509524c0375f14110acc20129b3b7a51c543102 Mon Sep 17 00:00:00 2001
+From: Scott K Logan <logans@cottsay.net>
+Date: Wed, 3 Apr 2024 13:59:54 -0500
+Subject: [PATCH 2/2] Resolve rmw_implementation_packages group manually
+
+---
+ rpm/ros-rolling-rmw-implementation.spec | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/rpm/ros-rolling-rmw-implementation.spec b/rpm/ros-rolling-rmw-implementation.spec
+index c7886ae8b7f2..7ea568eaf5e4 100644
+--- a/rpm/ros-rolling-rmw-implementation.spec
++++ b/rpm/ros-rolling-rmw-implementation.spec
+@@ -1,3 +1,4 @@
++%global _bloom_disable_groups 1
+ %{?!ros_distro:%global ros_distro rolling}
+ %global pkg_name rmw_implementation
+ %global normalized_pkg_name %{lua:return (string.gsub(rpm.expand('%{pkg_name}'), '_', '-'))}
+@@ -25,6 +26,8 @@ Summary:        %{summary}
+ Provides:       %{name} = %{version}-%{release}
+ Provides:       %{name}%{?_isa} = %{version}-%{release}
+ Requires:       %{name}-runtime%{?_isa} = %{version}-%{release}
++Requires:       ros-%{ros_distro}(rmw_implementation_packages)(devel)(member)
++Recommends:     ros-%{ros_distro}(rmw_fastrtps_cpp)(devel)
+ 
+ %description devel
+ Proxy implementation of the ROS 2 Middleware Interface.
+@@ -33,6 +36,8 @@ Proxy implementation of the ROS 2 Middleware Interface.
+ %package runtime
+ Release:        %{release}
+ Summary:        %{summary}
++Requires:       ros-%{ros_distro}(rmw_implementation_packages)(member)
++Recommends:     ros-%{ros_distro}(rmw_fastrtps_cpp)
+ 
+ %description runtime
+ Proxy implementation of the ROS 2 Middleware Interface.
+@@ -43,7 +48,7 @@ Proxy implementation of the ROS 2 Middleware Interface.
+ 
+ 
+ %generate_buildrequires
+-%bloom_buildrequires
++%bloom_buildrequires -g
+ 
+ 
+ %build
+-- 
+2.44.0
+
