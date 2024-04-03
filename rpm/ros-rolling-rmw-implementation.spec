@@ -1,3 +1,4 @@
+%global _bloom_disable_groups 1
 %{?!ros_distro:%global ros_distro rolling}
 %global pkg_name rmw_implementation
 %global normalized_pkg_name %{lua:return (string.gsub(rpm.expand('%{pkg_name}'), '_', '-'))}
@@ -25,6 +26,8 @@ Summary:        %{summary}
 Provides:       %{name} = %{version}-%{release}
 Provides:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       %{name}-runtime%{?_isa} = %{version}-%{release}
+Requires:       ros-%{ros_distro}(rmw_implementation_packages)(devel)(member)
+Recommends:     ros-%{ros_distro}(rmw_fastrtps_cpp)(devel)
 
 %description devel
 Proxy implementation of the ROS 2 Middleware Interface.
@@ -33,6 +36,8 @@ Proxy implementation of the ROS 2 Middleware Interface.
 %package runtime
 Release:        %{release}
 Summary:        %{summary}
+Requires:       ros-%{ros_distro}(rmw_implementation_packages)(member)
+Recommends:     ros-%{ros_distro}(rmw_fastrtps_cpp)
 
 %description runtime
 Proxy implementation of the ROS 2 Middleware Interface.
@@ -43,7 +48,7 @@ Proxy implementation of the ROS 2 Middleware Interface.
 
 
 %generate_buildrequires
-%bloom_buildrequires
+%bloom_buildrequires -g
 
 
 %build
